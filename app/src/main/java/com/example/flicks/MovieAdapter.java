@@ -1,6 +1,7 @@
 package com.example.flicks;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -50,13 +51,24 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {c
         Movie movie = movies.get(i);
         viewHolder.tvTitle.setText(movie.getTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
 
+        // determine the current orientation
+        boolean isPortrait = context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+
         // build url for poster image
-        String imageUrl = config.getImageBaseUrl(config.getPosterSize(),movie.getPosterPath());
+        String imageUrl = null;
+        // if in portrait mode,load the poster image
+        if (isPortrait) {
+            imageUrl = config.getImageBaseUrl(config.getPosterSize(), movie.getPosterPath());
+        } else {
+            // load the backdrop image
+            imageUrl = config.getImageBaseUrl(config.
+
+        }
 
         // load image using glide
         Glide.with(context)
@@ -85,6 +97,7 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // track view objects
          ImageView ivPosterImage;
+         ImageView ivBackdropImage;
          TextView tvTitle;
          TextView tvOverview;
 
@@ -92,6 +105,7 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>
             super(itemView);
             // lookup view objects by id
             ivPosterImage = itemView.findViewById(R.id.ivPosterImage);
+            ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             tvTitle = itemView.findViewById(R.id.tvTitle);
 
