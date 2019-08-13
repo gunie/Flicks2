@@ -30,17 +30,17 @@ public class MainActivity extends AppCompatActivity {
     public final static String API_KEY_PARAM = "api_key";
 
     // tag for logging from this activity
-    public final static String TAG = "MovieListActivity";
+    public final static String TAG = "MainActivity";
 
     // instance fields
     AsyncHttpClient client;
     // the base url for loading images
-    String imageBaseUrl;
-    // the poster size to use when fetching images,part of the url
-    String posterSize;
+//    String imageBaseUrl;
+//    // the poster size to use when fetching images,part of the url
+//    String posterSize;
     // the list of currently playing movies
     ArrayList<Movie> movies;
-    RecyclerView rvMovies;
+    RecyclerView rvMovie;
     MovieAdapter adapter ;
     // image config
     Config config;
@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         // initialize the List of movies
         movies = new ArrayList<>();
         adapter = new MovieAdapter(movies);
-        rvMovies = findViewById(R.id.rvMovies);
-        rvMovies.setLayoutManager(new LinearLayoutManager(this));
-        rvMovies.setAdapter(adapter);
+        rvMovie = (RecyclerView) findViewById(R.id.rvMovies);
+        rvMovie.setLayoutManager(new LinearLayoutManager(this));
+        rvMovie.setAdapter(adapter);
         // get the configuration on app creation
         getConfiguration();
 
@@ -119,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
 //                        JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
 //                        // use the option at index 3 or w342 as a fallback
 //                        posterSize = posterSizeOptions.optString(3, "w342");
-                        Log.i(TAG,
-                                String.format("Loaded configuration with imageBaseUrl %s ",
+                        Log.i(TAG, String.format("Loaded configuration with imageBaseUrl %s and posterSize %s",
                                         config.getImageBaseUrl(),
                                         config.getPosterSize()));
                         // pass config to adapter
@@ -140,13 +139,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
     // handle errors,log and alert user
-    private void logError(String message,Throwable error,boolean alertUser){
+    private void logError(String message, Throwable error, boolean alertUser){
         // always log the error
         Log.e(TAG,message,error);
         // alert the user to avoid silent errors
         if (alertUser){
             // show a long toast with the error message
-            Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG);
+            Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
         }
     }
 

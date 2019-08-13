@@ -18,12 +18,12 @@ import com.example.flicks.models.Movie;
 
 import java.util.ArrayList;
 
-public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>{
+public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     ArrayList<Movie>movies;
     // config needed for image urls
     Config config;
     // context for rendering
-     Context  context;
+     Context context;
 
 
 
@@ -51,7 +51,7 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {c
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Movie movie = movies.get(i);
         viewHolder.tvTitle.setText(movie.getTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
@@ -63,28 +63,31 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>
         String imageUrl = null;
         // if in portrait mode,load the poster image
         if (isPortrait) {
-            imageUrl = config.getImageBaseUrl(config.getPosterSize(), movie.getPosterPath());
+            imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
         } else {
             // load the backdrop image
-            imageUrl = config.getImageBaseUrl(config.
-
+            imageUrl = config.getImageUrl(config.getBackdropSize(), movie.getBackdropPath());
         }
+        int placeholderId = isPortrait ? R.drawable.flicks_backdrop_placeholder : R.drawable.flicks_backdrop_placeholder;
+        ImageView imageView = isPortrait ? viewHolder.ivPosterImage : viewHolder.ivBackdropImage;
 
         // load image using glide
         Glide.with(context)
                 .load(imageUrl)
-                .bitmapTransform(new RoundedCornersTransformation(context,15,0) {
-                    @Override
-                    public Resource<Bitmap> transform(Resource<Bitmap> resource, int outWidth, int outHeight) {
-                        return null;
-                    }
-
-                    @Override
-                    public String getId() {
-                        return null;
-                    }
-                })
+//                .bitmapTransform(new RoundedCornersTransformation(context,15,0))
                 .into(viewHolder.ivPosterImage);
+
+//                    @Override
+//                    public Resource<Bitmap> transform(Resource<Bitmap> resource, int outWidth, int outHeight) {
+//                        return null;
+//                    }
+//
+//                    @Override
+//                    public String getId() {
+//                        return null;
+//                    }
+//                })
+//                .into(viewHolder.ivPosterImage);
 
     }
 
@@ -104,10 +107,10 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // lookup view objects by id
-            ivPosterImage = itemView.findViewById(R.id.ivPosterImage);
+            ivPosterImage = (ImageView) itemView.findViewById(R.id.ivPosterImage);
             ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
-            tvOverview = itemView.findViewById(R.id.tvOverview);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
 
         }
     }

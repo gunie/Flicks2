@@ -3,7 +3,7 @@ package com.example.flicks.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Movie<backdropPath> {
+public class Movie {
 
     // values from API
     private String title;
@@ -16,10 +16,10 @@ public class Movie<backdropPath> {
     // initialize from JSON data
     public Movie(JSONObject object) throws JSONException {
         title = object.getString("title");
-        overview = object.getString("overiew");
+        overview = object.getString("overview");
         posterPath = object.getString("poster_path");
         backdropPath = object.getString("backdrop_path");
-        ;
+
 
     }
 
@@ -31,23 +31,13 @@ public class Movie<backdropPath> {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getOverview() {
         return overview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
-    }
-
     public String getBackdropPath() {
         return backdropPath;
     }
+
 }
