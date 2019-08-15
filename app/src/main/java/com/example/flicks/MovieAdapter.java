@@ -68,14 +68,14 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.ViewHolder>
             // load the backdrop image
             imageUrl = config.getImageUrl(config.getBackdropSize(), movie.getBackdropPath());
         }
-        int placeholderId = isPortrait ? R.drawable.flicks_backdrop_placeholder : R.drawable.flicks_backdrop_placeholder;
+        int placeholderId = isPortrait ? R.drawable.flicks_movie_placeholder : R.drawable.flicks_backdrop_placeholder;
         ImageView imageView = isPortrait ? viewHolder.ivPosterImage : viewHolder.ivBackdropImage;
 
         // load image using glide
         Glide.with(context)
                 .load(imageUrl)
 //                .bitmapTransform(new RoundedCornersTransformation(context,15,0))
-                .into(viewHolder.ivPosterImage);
+                .into(imageView);
 
 //                    @Override
 //                    public Resource<Bitmap> transform(Resource<Bitmap> resource, int outWidth, int outHeight) {
